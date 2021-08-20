@@ -3,6 +3,7 @@
     v-bind:text="Math.floor(Math.random() * 10) % 2 === 0 ? 'even' : 'odd'"
   />
   <BaseButton @onClick="alertOnClick">+</BaseButton>
+  <BaseButton @onClick="linkOnClick">Yahoo!</BaseButton>
 </template>
 
 <script>
@@ -17,6 +18,9 @@ export default {
   methods: {
     alertOnClick() {
       alert("Button Clicked!!!");
+    },
+    linkOnClick() {
+      location.href = "https://www.yahoo.co.jp/";
     },
   },
 };
