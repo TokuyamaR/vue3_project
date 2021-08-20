@@ -1,8 +1,8 @@
 <template>
   <TheHeader text="My counter" />
   <div>{{ count }}</div>
-  <BaseButton @onClick="minusOne">-</BaseButton>
-  <BaseButton @onClick="plusOne">+</BaseButton>
+  <BaseButton :disabled="hasMinCount" @onClick="minusOne">-</BaseButton>
+  <BaseButton :disabled="hasMaxCount" @onClick="plusOne">+</BaseButton>
 
   <NumberInput v-model.numberOnly="inputCount" />
   <BaseButton @onClick="insertCount">insert</BaseButton>
@@ -34,6 +34,26 @@ export default {
     },
     insertCount() {
       this.count = this.inputCount;
+    },
+  },
+  watch: {
+    inputCount(value) {
+      if (value >= 9999) {
+        this.count = 9999;
+      }
+      if (value <= 0) {
+        this.count = 0;
+      }
+    },
+  },
+  computed: {
+    // countが9999を超えたらtrueを返す
+    hasMaxCount() {
+      return this.count >= 9999;
+    },
+    // countが0を下回ったらtrueを返す
+    hasMinCount() {
+      return this.count <= 0;
     },
   },
 };
