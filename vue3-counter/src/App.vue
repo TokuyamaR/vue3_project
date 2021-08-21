@@ -1,11 +1,18 @@
 <template>
   <TheHeader text="My counter" />
-  <div>{{ count }}</div>
+  <div v-if="!validationMessageList.length">{{ count }}</div>
+  <div v-else v-for="message in validationMessageList" :key="message">
+    {{ message }}
+  </div>
   <BaseButton :disabled="hasMinCount" @onClick="minusOne">-</BaseButton>
   <BaseButton :disabled="hasMaxCount" @onClick="plusOne">+</BaseButton>
 
   <NumberInput v-model.numberOnly="inputCount" />
-  <BaseButton @onClick="insertCount">insert</BaseButton>
+  <BaseButton
+    :disabled="hasMinInputCount || hasMaxInputCount"
+    @onClick="insertCount"
+    >insert</BaseButton
+  >
 </template>
 
 <script>
@@ -23,27 +30,28 @@ export default {
     return {
       count: 0,
       inputCount: 0,
+      isEditing: false,
     };
   },
   methods: {
     plusOne() {
-      this.count++;
+      this.inputCount++;
     },
     minusOne() {
-      this.count--;
+      this.inputCount--;
     },
     insertCount() {
+      if (this.hasMaxInputCount || this.hasMinInputCount) {
+        return;
+      }
       this.count = this.inputCount;
+      this.isEditing = false;
+      alert("編集完了!!");
     },
   },
   watch: {
-    inputCount(value) {
-      if (value >= 9999) {
-        this.count = 9999;
-      }
-      if (value <= 0) {
-        this.count = 0;
-      }
+    inputCount() {
+      this.isEditing = true;
     },
   },
   computed: {
@@ -54,6 +62,30 @@ export default {
     // countが0を下回ったらtrueを返す
     hasMinCount() {
       return this.count <= 0;
+    },
+    // 入力した数字が9999を超えたらtrueを返す
+    hasMaxInputCount() {
+      return this.inputCount > 9999;
+    },
+    // 入力した数字が0を下回ったらtrueを返す
+    hasMinInputCount() {
+      return this.inputCount < 0;
+    },
+    validationMessageList() {
+      const validationList = [];
+
+      if (this.isEditing) {
+        validationList.push("編集中...");
+      }
+
+      if (this.hasMaxInputCount) {
+        validationList.push("9,999以下の数字を入力してください");
+      }
+
+      if (this.hasMinInputCount) {
+        validationList.push("0以上の数字を入力してください");
+      }
+      return validationList;
     },
   },
 };
