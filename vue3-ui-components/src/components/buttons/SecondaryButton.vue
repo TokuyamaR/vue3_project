@@ -37,13 +37,13 @@ export default defineComponent({
       emit('click');
     };
 
-    const buttonClass = computed(() => {
-      props.disabled ? 'text-gray-400 bg-gray-100' : 'text-gray-900 bg-gray-200';
-    });
+    const buttonClass = computed(() =>
+      props.disabled ? 'text-gray-400 bg-gray-100' : 'text-gray-900 bg-gray-200'
+    );
 
-    const linkButtonClass = () => {
-      props.disabled ? 'text-gray-400 bg-gray-100' : 'text-gray-900 bg-gray-200';
-    };
+    const linkButtonClass = computed(() =>
+      props.disabled ? 'text-gray-400 bg-gray-100' : 'text-gray-900 bg-gray-200'
+    );
 
     return {
       handleClick,
