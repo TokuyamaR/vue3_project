@@ -107,6 +107,7 @@ export default defineComponent({
       smallLabelClass,
       errorClass,
       disabledLabelClass,
+      focusedClass,
     };
   },
 });
