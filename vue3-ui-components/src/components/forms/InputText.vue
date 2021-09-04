@@ -73,7 +73,7 @@ export default defineComponent({
     };
 
     const handleFocus = (event: Event) => {
-      isFocus.value = false;
+      isFocus.value = true;
       emit('focus', event);
     };
 
