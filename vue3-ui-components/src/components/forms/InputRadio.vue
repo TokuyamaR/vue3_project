@@ -69,8 +69,6 @@ export default defineComponent({
     };
 
     const isChecked = computed(() => props.value === props.checked);
-    console.log(props.value);
-    console.log(isChecked.value);
     const checkedRingClass = computed(() => {
       if (props.disabled) {
         return 'border-gray-200 bg-gray-200 shadow-none';
